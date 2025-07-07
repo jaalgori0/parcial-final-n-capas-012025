@@ -1,6 +1,6 @@
 # Parcial Final Programación N-Capas – (Seguridad con Spring Security + JWT)
 
-Este repositorio contiene dos proyectos distintos para evaluar y practicar los conceptos de seguridad en aplicaciones Spring Boot usando JWT, roles y Docker.
+Este repositorio contiene un proyecto para evaluar y practicar los conceptos de seguridad en aplicaciones Spring Boot usando JWT, roles y Docker.
 
 ### Estudiantes
 - **Nombre del estudiante 1**: [Tu nombre aquí] - [Carnet aquí]
@@ -23,6 +23,10 @@ Su tarea es **agregar autenticación y autorización** utilizando **Spring Secur
 - Roles `USER` y `TECH`.
 - Acceso restringido según el rol del usuario.
 - Evidencia de funcionamiento (colección de Postman/Insomnia/Bruno o capturas de pantalla).
+
+**Nota: El proyecto ya tiene una estructura básica de Spring Boot con endpoints funcionales para manejar tickets. No es necesario modificar la lógica de negocio, solo agregar seguridad. Ademas se inclye un postman collection para probar los endpoints. **
+
+_Si van a crear mas endpoints como el login o registrarse recuerden actualizar postman/insomnia/bruno collection_
 
 ### Partes de desarrollo
 
