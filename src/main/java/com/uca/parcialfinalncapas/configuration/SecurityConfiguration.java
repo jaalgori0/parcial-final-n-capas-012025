@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/register/user").permitAll()
                         .requestMatchers("/api/auth/register/admin").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuth))
