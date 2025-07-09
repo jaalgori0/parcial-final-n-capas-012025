@@ -4,6 +4,8 @@ import com.uca.parcialfinalncapas.dto.request.UserCreateRequest;
 import com.uca.parcialfinalncapas.dto.request.UserUpdateRequest;
 import com.uca.parcialfinalncapas.dto.response.UserResponse;
 import com.uca.parcialfinalncapas.entities.User;
+import com.uca.parcialfinalncapas.utils.enums.Rol;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,7 @@ public class UserMapper {
                 .nombre(userRequest.getNombre())
                 .correo(userRequest.getCorreo())
                 .password(userRequest.getPassword())
-                .nombreRol(userRequest.getNombreRol())
+                .nombreRol(Rol.valueOf(userRequest.getNombreRol().toUpperCase()))
                 .build();
     }
 
@@ -23,7 +25,7 @@ public class UserMapper {
                 .id(userUpdate.getId())
                 .nombre(userUpdate.getNombre())
                 .password(userUpdate.getPassword())
-                .nombreRol(userUpdate.getNombreRol())
+                .nombreRol(Rol.valueOf(userUpdate.getNombreRol().toUpperCase()))
                 .build();
     }
 
@@ -32,7 +34,7 @@ public class UserMapper {
                 .idUsuario(user.getId())
                 .nombre(user.getNombre())
                 .correo(user.getCorreo())
-                .nombreRol(user.getNombreRol())
+                .nombreRol(user.getNombreRol().name())
                 .build();
     }
 

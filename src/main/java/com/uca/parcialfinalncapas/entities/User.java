@@ -1,5 +1,6 @@
 package com.uca.parcialfinalncapas.entities;
 
+import com.uca.parcialfinalncapas.utils.enums.Rol;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,5 +20,6 @@ public class User {
     private String nombre;
     private String correo;
     private String password;
-    private String nombreRol; // USER o TECH
+    @Enumerated(EnumType.STRING)
+    private Rol nombreRol; // USER o TECH
 }

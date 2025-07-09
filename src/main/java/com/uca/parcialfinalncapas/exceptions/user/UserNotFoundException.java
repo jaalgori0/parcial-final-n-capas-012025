@@ -1,4 +1,4 @@
-package com.uca.parcialfinalncapas.exceptions;
+package com.uca.parcialfinalncapas.exceptions.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {
