@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,7 +37,18 @@ public class TicketController {
         if (ticket == null) {
             throw new BadTicketRequestException("Ticket no encontrado");
         }
-        return ResponseBuilderUtil.buildResponse("Ticket found", HttpStatus.OK, ticket);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String correo = auth.getName();
+
+
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+            if (!ticket.getCorreoSolicitante().equals(correo)) {
+                return ResponseBuilderUtil.buildResponse("No autorizado para ver este ticket", HttpStatus.FORBIDDEN, null);
+            }
+        }
+
+        return ResponseBuilderUtil.buildResponse("Ticket encontrado", HttpStatus.OK, ticket);
     }
 
     @PreAuthorize("hasRole('USER')")
