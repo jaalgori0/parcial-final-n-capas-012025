@@ -1,4 +1,4 @@
-package com.uca.parcialfinalncapas.exceptions;
+package com.uca.parcialfinalncapas.exceptions.ticket;
 
 public class BadTicketRequestException extends RuntimeException {
     public BadTicketRequestException(String message) {

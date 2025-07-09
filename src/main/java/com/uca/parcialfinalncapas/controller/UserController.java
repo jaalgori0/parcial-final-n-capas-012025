@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class UserController {
     private UserService userService;
 
+    @PreAuthorize("hasRole('TECH')")
     @GetMapping("/all")
     public ResponseEntity<GeneralResponse> getAllUsers() {
         List<UserResponse> users = userService.findAll();
@@ -33,6 +35,7 @@ public class UserController {
         );
     }
 
+    @PreAuthorize("hasRole('TECH')")
     @GetMapping("/{correo}")
     public ResponseEntity<GeneralResponse> getUserByCorreo(@PathVariable String correo) {
         UserResponse user = userService.findByCorreo(correo);
@@ -51,6 +54,7 @@ public class UserController {
         return ResponseBuilderUtil.buildResponse("Usuario actualizado correctamente", HttpStatus.OK, updatedUser);
     }
 
+    @PreAuthorize("hasRole('TECH')")
     @DeleteMapping("/{id}")
     public ResponseEntity<GeneralResponse> deleteUser(@PathVariable Long id) {
         userService.delete(id);

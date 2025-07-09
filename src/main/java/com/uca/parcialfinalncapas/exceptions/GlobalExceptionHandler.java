@@ -1,6 +1,9 @@
 package com.uca.parcialfinalncapas.exceptions;
 
 import com.uca.parcialfinalncapas.dto.response.ErrorResponse;
+import com.uca.parcialfinalncapas.exceptions.ticket.BadTicketRequestException;
+import com.uca.parcialfinalncapas.exceptions.ticket.TicketNotFoundException;
+import com.uca.parcialfinalncapas.exceptions.user.UserNotFoundException;
 import com.uca.parcialfinalncapas.utils.ResponseBuilderUtil;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
