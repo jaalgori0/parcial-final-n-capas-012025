@@ -31,19 +31,19 @@ _Si van a crear mas endpoints como el login o registrarse recuerden actualizar p
 ### Partes de desarrollo
 
 #### Parte 1: Implementar login con JWT
-- [ ] Crear endpoint `/auth/login`.
-- [ ] Validar usuario y contraseña (puede estar en memoria o en BD).
-- [ ] Retornar JWT firmado.
+- [x] Crear endpoint `/auth/login`.
+- [x] Validar usuario y contraseña (puede estar en memoria o en BD).
+- [x] Retornar JWT firmado.
 
 #### Parte 2: Configurar filtros y validación del token
-- [ ] Crear filtro para validar el token en cada solicitud.
-- [ ] Extraer usuario desde el JWT.
-- [ ] Añadir a contexto de seguridad de Spring.
+- [x] Crear filtro para validar el token en cada solicitud.
+- [x] Extraer usuario desde el JWT.
+- [x] Añadir a contexto de seguridad de Spring.
 
 #### Parte 3: Proteger endpoints con Spring Security
-- [ ] Permitir solo el acceso al login sin token.
-- [ ] Proteger todos los demás endpoints.
-- [ ] Manejar errores de autorización adecuadamente.
+- [x] Permitir solo el acceso al login sin token.
+- [x] Proteger todos los demás endpoints.
+- [x] Manejar errores de autorización adecuadamente.
 
 #### Parte 4: Aplicar roles a los endpoints
 
@@ -52,14 +52,14 @@ _Si van a crear mas endpoints como el login o registrarse recuerden actualizar p
 | USER  | Crear tickets, ver solo sus tickets              |
 | TECH  | Ver todos los tickets, actualizar estado         |
 
-- [ ] Usar `@PreAuthorize` o reglas en el `SecurityFilterChain`.
-- [ ] Validar que un USER solo vea sus tickets.
-- [ ] Validar que solo un TECH pueda modificar tickets.
+- [x] Usar `@PreAuthorize` o reglas en el `SecurityFilterChain`.
+- [x] Validar que un USER solo vea sus tickets.
+- [x] Validar que solo un TECH pueda modificar tickets.
 
 #### Parte 5: Agregar Docker
-- [ ] `Dockerfile` funcional para la aplicación.
-- [ ] `docker-compose.yml` que levante la app y la base de datos.
-- [ ] Documentar cómo levantar el entorno (`docker compose up`).
+- [x] `Dockerfile` funcional para la aplicación.
+- [x] `docker-compose.yml` que levante la app y la base de datos.
+- [x] Documentar cómo levantar el entorno (`docker compose up`).
 
 #### Parte 6: Evidencia de pruebas
 - [ ] Probar todos los flujos con Postman/Insomnia/Bruno.
