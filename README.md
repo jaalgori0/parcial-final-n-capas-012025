@@ -65,3 +65,179 @@ _Si van a crear mas endpoints como el login o registrarse recuerden actualizar p
 - [ ] Probar todos los flujos con Postman/Insomnia/Bruno.
 - [ ] Mostrar que los roles se comportan correctamente.
 - [ ] Incluir usuarios de prueba (`user`, `tech`) y contraseñas.
+
+---
+
+## Notas sobre ajustes realizados
+
+Durante el desarrollo y las pruebas del sistema se identificaron algunos errores menores en la configuración del código, los cuales fueron corregidos para asegurar que todos los flujos funcionaran correctamente. A continuación, se detallan los cambios realizados y los archivos modificados:
+
+---
+
+### 1. Acceso al endpoint de autenticación y PasswordEncoder no encriptado  
+**Archivo:** `SecurityConfiguration.java`
+
+Se ajustó la configuración de seguridad para permitir correctamente las peticiones al endpoint de autenticación:
+```java
+// Cambio aplicado:
+.requestMatchers("/api/auth").permitAll()
+
+// En lugar de:
+.requestMatchers("/api/auth/register/user").permitAll()
+```
+
+Se utilizó `NoOpPasswordEncoder` para evitar errores al validar contraseñas sin cifrado:
+
+```java
+// Cambio aplicado temporalmente:
+return NoOpPasswordEncoder.getInstance();
+
+// En lugar de:
+return new BCryptPasswordEncoder();
+```
+
+### 2. Comparación de roles en lógica de tickets
+**Archivo:** `TicketServiceImpl.java`
+
+Se corrigió la comparación de roles que generaba errores al validar si el usuario tenía permisos de tipo TECH:
+```java
+// Cambio aplicado:
+usuarioSoporte.getNombreRol() != Rol.TECH
+
+// En lugar de:
+!usuarioSoporte.getNombreRol().equals(Rol.TECH.getValue())
+```
+
+Todos estos ajustes fueron clave para completar exitosamente las pruebas del sistema con ambos roles.
+
+---
+
+## Usuarios de Prueba y Autenticación
+
+Se crearon dos usuarios para probar los distintos roles en el sistema. Ambos usuarios pueden registrarse y autenticarse correctamente a través del endpoint correspondiente.
+
+---
+
+### 1. Registro de Usuarios
+
+**Endpoint:** `POST {{baseUrl}}/api/users`
+
+#### USER
+
+```json
+{
+  "nombre": "Usuario Prueba",
+  "correo": "user@uca.edu.sv",
+  "password": "user123",
+  "nombreRol": "USER"
+}
+```
+#### TECH
+```json
+{
+  "nombre": "Usuario Tech",
+  "correo": "Techr@uca.edu.sv",
+  "password": "tech123",
+  "nombreRol": "TECH"
+}
+```
+
+### 2. Inicio de Sesión
+
+**Endpoint:** `POST {{baseUrl}}/api/auth/login`
+
+#### Login como USER
+```json
+{
+  "correo": "user@uca.edu.sv",
+  "password": "user123"
+}
+```
+#### Login como TECH
+```json
+{
+  "correo": "Techr@uca.edu.sv",
+  "password": "tech123"
+}
+```
+### 3. Respuesta al login exitoso (ejemplo con TECH)
+
+```json
+{
+  "uri": "/api/auth/login",
+  "message": "Inicio de sesión exitoso",
+  "status": 200,
+  "time": null,
+  "data": {
+    "token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJUZWNockB1Y2EuZWR1LnN2IiwiaWF0IjoxNzUyMjU4NDM0LCJleHAiOjE3NTIzNDQ4MzR9.pexJeJk3LpBt4OwK79rUJwlUX5wbyuQVa_aQDa_7djJKqMWxvM37EeFO8UUidYwj"
+  }
+}
+```
+El token JWT obtenido debe utilizarse en las siguientes peticiones protegidas agregando el header:  
+`Authorization: Bearer <token>`
+
+### Tickets
+
+**Endpoint:** ```GET {{baseUrl}}/api/tickets```
+
+como TECH se pueden obtener todos los resultados
+
+<img src="./Capturas/image.png" alt="Captura obtener todo los tickets" width="600"/>
+
+**Endpoint:** ```GET {{baseUrl}}/api/tickets/1```
+
+Como TECH se pueden obtener los resultados por id
+
+<img src="./Capturas/image-1.png" alt="Captura obtener el ticket por id" width="600"/>
+
+**Endpoint:** ```POST {{baseUrl}}/api/tickets```
+
+Como TECH no se pueden crear tickets
+
+<img src="./Capturas/image-2.png" alt="Captura obtener el ticket por id" width="600"/>
+
+pero como USER si
+
+<img src="./Capturas/image-3.png" alt="Captura obtener el ticket por id" width="600"/>
+
+**Endpoint:** ```DELETE {{baseUrl}}/api/tickets/2```
+
+Como USER no se pueden elimiinar tickets
+
+<img src="./Capturas/image-4.png" alt="Captura obtener el ticket por id" width="600"/>
+
+Como TECH si se pueden eliminar tickets
+
+<img src="./Capturas/image-5.png" alt="Captura obtener el ticket por id" width="600"/>
+
+### USERS
+
+**Endpoint:** ```GET {{baseUrl}}/api/users/all```
+
+Como TECH Se pueden obtener todos los usuarios
+
+<img src="./Capturas/image-6.png" alt="Captura obtener el ticket por id" width="600"/>
+
+Como USER no se puede obetener los usuarios
+
+<img src="./Capturas/image-7.png" alt="Captura obtener el ticket por id" width="600"/>
+
+**Endpoint:** ```GET {baseUrl}}/api/users/user@uca.edu.sv```
+
+Como TECH se puede obtener el usuario por correo
+
+<img src="./Capturas/image-8.png" alt="Captura obtener el ticket por id" width="600"/>
+
+Como USER no se puede obtener el usuario por correo
+
+<img src="./Capturas/image-9.png" alt="Captura obtener el ticket por id" width="600"/>
+
+**Endpoint:** ```DELETE {{baseUrl}}/api/users/3```
+
+Como TECH se puede eliminar a un usuario
+
+<img src="./Capturas/image-10.png" alt="Captura obtener el ticket por id" width="600"/>
+
+Como USER se puede eliminar a un usuario
+
+<img src="./Capturas/image-11.png" alt="Captura obtener el ticket por id" width="600"/>
